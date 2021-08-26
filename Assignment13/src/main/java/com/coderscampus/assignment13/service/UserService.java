@@ -1,6 +1,7 @@
 package com.coderscampus.assignment13.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -9,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.coderscampus.assignment13.domain.Account;
+import com.coderscampus.assignment13.domain.Address;
 import com.coderscampus.assignment13.domain.User;
 import com.coderscampus.assignment13.repository.AccountRepository;
+import com.coderscampus.assignment13.repository.AddressRepository;
 import com.coderscampus.assignment13.repository.UserRepository;
 
 @Service
@@ -20,6 +23,8 @@ public class UserService {
 	private UserRepository userRepo;
 	@Autowired
 	private AccountRepository accountRepo;
+	@Autowired
+	private AddressRepository addressRepo;
 	
 	public List<User> findByUsername(String username) {
 		return userRepo.findByUsername(username);
@@ -49,6 +54,20 @@ public class UserService {
 		Optional<User> userOpt = userRepo.findById(userId);
 		return userOpt.orElse(new User());
 	}
+	public User saveAddress(User user) {
+
+		if (user.getAddress() == null){
+			Address address = new Address();
+			address.setUser(user);
+			//address.setUserId(user.getUserId());
+			user.setAddress(address);
+			addressRepo.save(address);
+			return user;
+		}
+		else {
+			return user;
+		}
+	}
 
 	public User saveUser(User user) {
 		if (user.getUserId() == null) {
@@ -58,12 +77,18 @@ public class UserService {
 			Account savings = new Account();
 			savings.setAccountName("Savings Account");
 			savings.getUsers().add(user);
-			
+
 			user.getAccounts().add(checking);
 			user.getAccounts().add(savings);
+	
 			accountRepo.save(checking);
 			accountRepo.save(savings);
+			saveAddress(user);
 		}
+		saveAddress(user);
+		user.getAddress().setUser(user);
+		user.getAddress().setUserId(user.getUserId());
+
 		return userRepo.save(user);
 	}
 

@@ -19,22 +19,22 @@
 				</div>
 				<hr/>
 				<div>
-				
+					Address Line 1: <input type="text" th:field="${user.address.addressLine1}" />
 				</div>
 				<div>
-					Address Line 2: <input type="password" th:field="${user.password}" />
+					Address Line 2: <input type="text" th:field="${user.address.addressLine2}" />
 				</div>
 				<div>
-					City: <input type="text" th:field="${user.name}" />
+					City: <input type="text" th:field="${user.address.city}" />
 				</div>
 				<div>
-					Region: <input type="text" th:field="${user.name}" />
+					Region: <input type="text" th:field="${user.address.region}" />
 				</div>
 				<div>
-					Country: <input type="text" th:field="${user.name}" />
+					Country: <input type="text" th:field="${user.address.country}" />
 				</div>
 				<div>
-					Zip Code: <input type="text" th:field="${user.name}" />
+					Zip Code: <input type="text" th:field="${user.address.zipCode}" />
 				</div>
 				<br/>
 				<div>
@@ -46,6 +46,12 @@
 			</form>
 			<hr/>
 			<h2>Accounts</h2>
+			<div th:each="account : ${user.accounts}">
+				<a th:href="@{/users/{userId}(userId=${user.userId})}">[[${account.accountName}]]</a>
+			</div><br/>
+			<form th:action="@{/users/{userId}(userId=${user.userId})/accounts}" method="post">
+				<input type="submit" value="Create New Bank Account" />
+			</form><br/>
 			<a href ="/users">Back</a>
 		</div>
 		

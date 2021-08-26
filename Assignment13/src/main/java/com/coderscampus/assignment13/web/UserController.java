@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.coderscampus.assignment13.domain.Address;
 import com.coderscampus.assignment13.domain.User;
 import com.coderscampus.assignment13.service.UserService;
 
@@ -23,6 +24,7 @@ public class UserController {
 	public String getCreateUser (ModelMap model) {
 		
 		model.put("user", new User());
+		model.put("adddress", new Address());
 		
 		return "register";
 	}
@@ -37,7 +39,6 @@ public class UserController {
 	@GetMapping("/users")
 	public String getAllUsers (ModelMap model) {
 		Set<User> users = userService.findAll();
-		
 		model.put("users", users);
 		if (users.size() == 1) {
 			model.put("user", users.iterator().next());
@@ -48,7 +49,7 @@ public class UserController {
 	
 	@GetMapping("/users/{userId}")
 	public String getOneUser (ModelMap model, @PathVariable Long userId) {
-		User user = userService.findById(userId);
+		User user = userService.findById(userId);		
 		model.put("users", Arrays.asList(user));
 		model.put("user", user);
 		return "users";
@@ -64,5 +65,18 @@ public class UserController {
 	public String deleteOneUser (@PathVariable Long userId) {
 		userService.delete(userId);
 		return "redirect:/users";
+	}
+	@GetMapping("/users/{userId}/accounts/{accountId")
+	public String getUserAccount (ModelMap model, @PathVariable Long userId) {
+		User user = userService.findById(userId);		
+		model.put("users", Arrays.asList(user));
+		model.put("user", user);
+		return "accounts";
+	}
+	
+	@PostMapping("/users/{userId}/accounts/{accountId")
+	public String postUserAccount (User user) {
+		userService.saveUser(user);
+		return "redirect:/users/"+user.getUserId() + "/accounts/";
 	}
 }
