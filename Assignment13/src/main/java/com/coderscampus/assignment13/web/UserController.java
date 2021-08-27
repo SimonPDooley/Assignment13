@@ -57,6 +57,7 @@ public class UserController {
 	
 	@PostMapping("/users/{userId}")
 	public String postOneUser (User user) {
+		
 		userService.saveUser(user);
 		return "redirect:/users/"+user.getUserId();
 	}
@@ -66,7 +67,7 @@ public class UserController {
 		userService.delete(userId);
 		return "redirect:/users";
 	}
-	@GetMapping("/users/{userId}/accounts/{accountId")
+	@GetMapping("/users/{userId}/accounts/{accountId}")
 	public String getUserAccount (ModelMap model, @PathVariable Long userId) {
 		User user = userService.findById(userId);		
 		model.put("users", Arrays.asList(user));
@@ -74,7 +75,7 @@ public class UserController {
 		return "accounts";
 	}
 	
-	@PostMapping("/users/{userId}/accounts/{accountId")
+	@PostMapping("/users/{userId}/accounts/{accountId}")
 	public String postUserAccount (User user) {
 		userService.saveUser(user);
 		return "redirect:/users/"+user.getUserId() + "/accounts/";

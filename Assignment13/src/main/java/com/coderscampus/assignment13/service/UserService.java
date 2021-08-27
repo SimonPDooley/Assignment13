@@ -70,6 +70,7 @@ public class UserService {
 	}
 
 	public User saveUser(User user) {
+	//	if (user.getUserId() == null || user.getAccounts().isEmpty()) {
 		if (user.getUserId() == null) {
 			Account checking = new Account();
 			checking.setAccountName("Checking Account");
@@ -80,15 +81,20 @@ public class UserService {
 
 			user.getAccounts().add(checking);
 			user.getAccounts().add(savings);
+			
 	
 			accountRepo.save(checking);
 			accountRepo.save(savings);
 			saveAddress(user);
+
 		}
+		
+		System.out.println("user accounts are " + user.getAccounts().toString());
 		saveAddress(user);
 		user.getAddress().setUser(user);
 		user.getAddress().setUserId(user.getUserId());
-
+		
+		
 		return userRepo.save(user);
 	}
 

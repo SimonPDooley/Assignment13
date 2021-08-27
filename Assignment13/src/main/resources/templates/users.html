@@ -36,18 +36,15 @@
 				<div>
 					Zip Code: <input type="text" th:field="${user.address.zipCode}" />
 				</div>
-				<br/>
-				<div>
+				<div><br/>
 					<input type="submit" value="Update User Account" />
-				</div>
-			</form>
-			<form th:action="@{/users/{userId}/delete(userId=${user.userId})}" method="post">
-				<input type="submit" value="Delete User Account" />
+				</div><br/>
+				
 			</form>
 			<hr/>
 			<h2>Accounts</h2>
 			<div th:each="account : ${user.accounts}">
-				<a th:href="@{/users/{userId}(userId=${user.userId})}">[[${account.accountName}]]</a>
+				<a th:href="@{/users/{userId}(userId=${user.userId})/accounts/{accountId}(accountId=${account.accountId})}">[[${account.accountName}]]</a>
 			</div><br/>
 			<form th:action="@{/users/{userId}(userId=${user.userId})/accounts}" method="post">
 				<input type="submit" value="Create New Bank Account" />

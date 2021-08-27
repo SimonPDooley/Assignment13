@@ -1,7 +1,9 @@
 package com.coderscampus.assignment13.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +20,7 @@ public class Account {
 	private Long accountId;
 	private String accountName;
 	private List<Transaction> transactions = new ArrayList<>();
-	private List<User> users = new ArrayList<>();
+	private Set<User> users = new HashSet<>();
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getAccountId() {
@@ -42,10 +44,11 @@ public class Account {
 		this.transactions = transactions;
 	}
 	@ManyToMany(mappedBy = "accounts")
-	public List<User> getUsers() {
+	public Set<User> getUsers() {
 		return users;
 	}
-	public void setUsers(List<User> users) {
+	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
+	
 }
