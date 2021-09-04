@@ -59,7 +59,6 @@ public class UserService {
 		if (user.getAddress() == null){
 			Address address = new Address();
 			address.setUser(user);
-			//address.setUserId(user.getUserId());
 			user.setAddress(address);
 			addressRepo.save(address);
 			return user;
@@ -70,7 +69,6 @@ public class UserService {
 	}
 
 	public User saveUser(User user) {
-	//	if (user.getUserId() == null || user.getAccounts().isEmpty()) {
 		if (user.getUserId() == null) {
 			Account checking = new Account();
 			checking.setAccountName("Checking Account");
@@ -89,7 +87,6 @@ public class UserService {
 
 		}
 		
-		System.out.println("user accounts are " + user.getAccounts().toString());
 		saveAddress(user);
 		user.getAddress().setUser(user);
 		user.getAddress().setUserId(user.getUserId());

@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
 	<head>
-		<title>th:text="${account.accountName}"</title>
+		<title>Test</title>
 	</head>
 	<body>
-		<h1>Create Your Account</h1>
+	<div>
+		<h1>[[${account.accountName}]]</h1>
 		
 		<form action="" method="post">
 			<div>
-				Account Name: <input type="text" th:field="${user.account.accountName}" />
+				<input type="hidden" th:field="*{user.address}"/>
+				<input type="hidden" th:field="*{user.accounts}"/>
+				<input type="hidden" th:field="*{user.name}"/>
+				<input type="hidden" th:field="*{user.password}"/>
+				<input type="hidden" th:field="*{user.username}"/>
+				Account Name:  <input type="text" th:field="${account.accountName}" />
 			</div>
 			<div>
 				<input type="submit" value="Save Account" />
-			</div>
+			</div><hr>
 		</form>
-		<a href ="/users/{userId}">Back</a>
+			<a th:href="@{/users/{userId}(userId=${user.userId})}">Back</a>
+		</div>
+	
 	</body>
 </html>
